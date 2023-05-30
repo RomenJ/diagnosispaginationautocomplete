@@ -17,7 +17,10 @@ class DiagnosticoType extends AbstractType
         $builder
           //  ->add('date')
             ->add('notas')
-            ->add('paciente')
+            
+            //->add('paciente')
+
+            ->add('paciente', PacienteAutocompleteField::class)
         //    ->add('patologias', )
 
             ->add('patologias',EntityType::class, [
