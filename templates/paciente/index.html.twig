@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paciente index{% endblock %}
+
+{% block body %}
+    <h1>Listado de pacientes</h1>
+<table>
+    <tr>
+        {# sorting of properties based on query components #}
+             <th><b>{{ knp_pagination_sortable(pagination, 'Nombre', 'a.id') }}</b></th>
+             <th><b>{{ knp_pagination_sortable(pagination, 'Apellidos', 'a.id') }}</b></th>
+             <th><b>{{ knp_pagination_sortable(pagination, 'Fecha de nacimiento', 'a.id') }}</b></th>
+             <th><b>{{ knp_pagination_sortable(pagination, 'DNI', 'a.id') }}</b></th>
+             <th><b>{{ knp_pagination_sortable(pagination, 'Teléfono ', 'a.id') }}</b></th>
+             <th><b>{{ knp_pagination_sortable(pagination, 'Dirección', 'a.id') }}</b></th>        
+    </tr>
+
+    {# table body #}
+    {% for paciente in pagination %}
+        <tr {% if loop.index is odd %}class="color"{% endif %}>
+          
+    <tr>
+                
+                <td>{{ paciente.name }}</td>
+                <td>{{ paciente.surname }}</td>
+                <td>{{ paciente.dateborn ? paciente.dateborn|date('Y-m-d') : '' }}</td>
+                <td>{{ paciente.dni }}</td>
+                <td>{{ paciente.telefono }}</td>
+                <td>{{ paciente.direccion }}</td>
+                <td>
+                    <a class="btn btn-success minimarg" href="{{ path('app_paciente_show', {'id': paciente.id}) }}">ver</a>
+                    <a  class="btn btn-primary minimarg"  href="{{ path('app_paciente_edit', {'id': paciente.id}) }}">editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        
+    {% endfor %}
+</table>
+{# display navigation #}
+<a class="Blanco btnfalseMini" href="{{ path('app_paciente_new') }}">Crear nuevo paciente </a>
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+{% endblock %}

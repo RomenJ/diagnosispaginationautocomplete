@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pato index{% endblock %}
+
+{% block body %}
+    <h1>Patologías </h1>
+<img title="flaticon icon" class="fotoHome1" width="80px" src="/images/fisioterapia.png">
+<br/>
+<br/>
+    <a class="btn btn-primary" href="{{ path('app_pato_new') }}">Crear nueva patología </a>
+     
+<table>
+    <tr>
+        {# sorting of properties based on query components #}
+             <th><b>{{ knp_pagination_sortable(pagination, 'Título ', 'a.id') }}</b></th>
+             <th><b>{{ knp_pagination_sortable(pagination, 'Descripción ', 'a.id') }}</b></th>
+             <th><b>{{ knp_pagination_sortable(pagination, 'Código CIE-10', 'a.id') }}</b></th>
+             
+             <th><b>{{ knp_pagination_sortable(pagination, 'Acciones', 'a.id') }}</b></th>
+             
+    </tr>
+
+    {# table body #}
+    {% for pato in pagination %}
+        <tr {% if loop.index is odd %}class="color"{% endif %}>
+    <tr>
+                
+                <td>{{ pato.titulo }}</td>
+                <td>{{ pato.descripcion }}</td>
+                <td>{{ pato.codcie }}</td>
+                <td>
+                    <a href="{{ path('app_pato_show', {'id': pato.id}) }}">show</a>
+                    <a href="{{ path('app_pato_edit', {'id': pato.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        
+    {% endfor %}
+</table>
+{# display navigation #}
+
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+
+    {# Versión sin paginar:
+ <img title="flaticon icon" class="fotoHome1" width="80px" src="/images/fisioterapia.png">
+    <table class="table">
+        <thead>
+            <tr>
+                
+                <th>Titulo</th>
+                <th>Descripcion</th>
+                <th>Codcie</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pato in patos %}
+            <tr>
+                
+                <td>{{ pato.titulo }}</td>
+                <td>{{ pato.descripcion }}</td>
+                <td>{{ pato.codcie }}</td>
+                <td>
+                    <a href="{{ path('app_pato_show', {'id': pato.id}) }}">show</a>
+                    <a href="{{ path('app_pato_edit', {'id': pato.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_pato_new') }}">Create new</a>
+
+    #}
+{% endblock %}
